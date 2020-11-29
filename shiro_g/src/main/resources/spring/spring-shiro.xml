@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- 先创建securityManager -->
+	<bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"
+		id="securityManager">
+		<property name="realms" ref="customRealm" />
+		
+	</bean>
+
+	<!-- 创建自定义realm -->
+	<bean class="com.daigou.shiro.realm.CustomRealm" id="customRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher" />
+	</bean>
+
+	<!-- 创建密码匹配器 -->
+	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher"
+		id="credentialsMatcher">
+		<property name="hashAlgorithmName" value="md5" />
+		<property name="hashIterations" value="1" />
+	</bean>
+	
+	<!-- shiroFilter -->
+	<bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="login.html"></property>
+		<property name="filterChainDefinitions">
+			<value>
+				/login.html = anon
+				/subLogin=anon
+				/*=authc
+			</value>
+		</property>
+	</bean>
+
+</beans>
