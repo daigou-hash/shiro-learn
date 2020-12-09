@@ -28,11 +28,13 @@
 	<!-- shiroFilter -->
 	<bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="login.html"></property>
+		<property name="loginUrl" value="login.html"/>
+		<property name="unauthorizedUrl" value="403.html"></property>
 		<property name="filterChainDefinitions">
 			<value>
 				/login.html = anon
 				/subLogin=anon
+				/testRole=roles[admin]
 				/*=authc
 			</value>
 		</property>

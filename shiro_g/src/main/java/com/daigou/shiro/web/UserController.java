@@ -24,14 +24,19 @@ public class UserController {
 	public String login(User user){
 		
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
-		
 		Subject subject = SecurityUtils.getSubject();
-		
 		try{
 			subject.login(token);
 		}catch(AuthenticationException e){
 			return e.getMessage();
 		}
 		return "登录成功";
+	}
+	
+	@RequestMapping(value="/testRole",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String testRole(){
+		
+		return "拥有admin角色";
 	}
 }

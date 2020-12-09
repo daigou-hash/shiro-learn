@@ -11,6 +11,6 @@
 
 	<mvc:annotation-driven />
 	
-	<mvc:resources location="/login.html" mapping="/**"/>
+	<mvc:resources location="/" mapping="/**"/>
 
 </beans>
